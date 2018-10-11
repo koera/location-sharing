@@ -36,7 +36,7 @@ class DefaultController extends Controller
             $em->persist($user);
             $em->flush();
             $response = new Response();
-            $response->setContent(json_encode(['status'=>200,'message' => 'user saved']));
+            $response->setContent(json_encode(array('status'=>200,'message' => 'user saved')));
         
             $response->headers->set('Content-Type', 'application/json');
             // Allow all websites
@@ -55,7 +55,7 @@ class DefaultController extends Controller
         if($request->get('user_name') && $request->get('latitude') && $request->get('longitude')){
             $em = $this->getDoctrine()->getManager();
             /** @var User $user */
-            $user = $em->getRepository(User::class)->findOneBy(['name'=> $request->get('user_name')]);
+            $user = $em->getRepository(User::class)->findOneBy(array('name'=> $request->get('user_name')));
             if($user){
                 $user->setPosition([$request->get('latitude'),$request->get('longitude')]);
                 $em->persist($user);
@@ -68,7 +68,7 @@ class DefaultController extends Controller
                 $em->flush();
             }
             $response = new Response();
-            $response->setContent(json_encode(['status'=>200,'message' => 'position saved']));
+            $response->setContent(json_encode(array('status'=>200,'message' => 'position saved')));
         
             $response->headers->set('Content-Type', 'application/json');
             // Allow all websites
@@ -90,10 +90,10 @@ class DefaultController extends Controller
         if($request->get('user_name')){
             $em = $this->getDoctrine()->getManager();
             /** @var User $user */
-            $user = $em->getRepository(User::class)->findOneBy(['name'=> $request->get('user_name')]);
+            $user = $em->getRepository(User::class)->findOneBy(array('name'=> $request->get('user_name')));
             if($user && $user->getPosition()!= null){
                 $response = new Response();
-                $response->setContent(json_encode(['status'=>200,'data' => $user->getPosition()]));
+                $response->setContent(json_encode(array('status'=>200,'data' => $user->getPosition())));
             
                 $response->headers->set('Content-Type', 'application/json');
                 // Allow all websites
@@ -105,7 +105,7 @@ class DefaultController extends Controller
             }
             else{
                 $response = new Response();
-                $response->setContent(json_encode(['status'=> 400,'message' => 'Position '.$request->get('user_name').' not found yet']));
+                $response->setContent(json_encode(array('status'=> 400,'message' => 'Position '.$request->get('user_name').' not found yet')));
             
                 $response->headers->set('Content-Type', 'application/json');
                 // Allow all websites
